@@ -1,0 +1,33 @@
+# AdvancedCrafting example file
+# BUKKIT NAMES CAN BE SEEN AT:
+#   enchantments:   https://docs.oc.tc/reference/enchantments
+#   items:          https://docs.oc.tc/reference/inventory
+
+AdvancedCrafting:
+  Type: shaped              # Crafting type, can be Shaped or Shapeless
+
+  Namespace: xkuhc          # Plugin / Project name
+  Key: QUICK_STONEPICK      # Crafting Id, can be anything that doesn't collide with any other id
+
+  Recipe:
+    Shape:                  # Crafting shape, can accept any character if properly escaped
+      - 'CCC'
+      - '*S*'
+      - ' S '
+    Ingredients:            # Binds a character to an ingredient, needs a Bukkit Name
+      C: COBBLESTONE
+      S: STICK
+      '*': REDSTONE
+
+  Result:
+    Item: STONE_PICKAXE     # Item Id, as Bukkit Name
+    Name: Quick Pickaxe     # Item display name             [Optional]
+    Count: 1                #                               [Optional, default 1]
+    Unbreakable: no         # Can be true/false, yes/no     [Optional, default false]
+    Enchant:                # Result Item enchant           [Optional]
+      Key: DIG_SPEED        # Enchant id, as Bukkit Name
+      Level: 2              #                               [Optional, default 1]
+    Lore:                   # Result Item lore              [Optional]
+      - Feel like you're diggin' slow?
+      - Use a little bit o' that dust
+      - and dig away!
