@@ -1,19 +1,20 @@
 package ovh.excale.mc;
 
-import org.bukkit.Material;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.List;
 import java.util.logging.Logger;
 
 public class AdvancedCrafting extends JavaPlugin {
+
+	private static Plugin plugin;
+
+	public static Plugin plugin() {
+		return plugin;
+	}
 
 	private File craftDir;
 
@@ -22,6 +23,7 @@ public class AdvancedCrafting extends JavaPlugin {
 	public void onEnable() {
 		super.onEnable();
 		Logger logger = getLogger();
+		plugin = this;
 
 		craftDir = new File(getDataFolder(), "crafts");
 
@@ -48,6 +50,8 @@ public class AdvancedCrafting extends JavaPlugin {
 				}
 
 				String[] shape = (String[]) craftConf.getStringList("AdvancedCrafting.Recipe.Shape").toArray();
+				if(shape.length != 3)
+					;
 
 			} else if(craftConf.contains("ShapelessRecipe")) {
 
