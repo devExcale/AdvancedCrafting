@@ -1,24 +1,25 @@
 package ovh.excale.mc;
 
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import ovh.excale.mc.advcraft.CraftingRecipe;
+import ovh.excale.mc.advcraft.exceptions.ArgumentParseException;
+import ovh.excale.mc.advcraft.exceptions.MissingArgumentException;
 
 import java.io.File;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.logging.Logger;
 
 public class AdvancedCrafting extends JavaPlugin {
 
 	private static Plugin plugin;
+	private static File craftDir;
 
 	public static Plugin plugin() {
 		return plugin;
 	}
 
-	private File craftDir;
-
-	@SuppressWarnings("ConstantConditions")
 	@Override
 	public void onEnable() {
 		super.onEnable();
@@ -34,31 +35,29 @@ public class AdvancedCrafting extends JavaPlugin {
 
 		File[] crafts = craftDir.listFiles(pathname -> !pathname.isDirectory() && pathname.getName().endsWith(".yml"));
 
-		for(File file : crafts) {
-			FileConfiguration craftConf = YamlConfiguration.loadConfiguration(file);
-			String craftName = file.getName().replaceAll(".yml$", "");
+		for(File file : crafts)
+			try {
 
-			if(craftConf.contains("AdvancedCrafting")) {
-
-				String namespace, key, displayName;
-				namespace = craftConf.getString("AdvancedCrafting.Namespace");
-				key = craftConf.getString("AdvancedCrafting.Key");
-
-				if(!craftConf.contains("AdvancedCrafting.Recipe")) {
-					logger.warning("Missing field AdvancedCrafting.Recipe in recipe " + craftName);
-					continue;
+				CraftingRecipe recipe = CraftingRecipe.parse(file);
+				if(recipe == null)
+					logger.warning("Couldn't recognise file " + file.getName() + " as a recipe");
+				else {
+					recipe.register();
+					logger.info("Loaded recipe " + recipe.getKey());
 				}
 
-				String[] shape = (String[]) craftConf.getStringList("AdvancedCrafting.Recipe.Shape").toArray();
-				if(shape.length != 3)
-					;
+			} catch(ArgumentParseException | MissingArgumentException e) {
+				logger.warning(e.getMessage());
 
-			} else if(craftConf.contains("ShapelessRecipe")) {
+				if(true) {
 
-			} else
-				logger.warning("Couldn't load recipe " + craftName);
+					StringWriter sw = new StringWriter();
+					PrintWriter pw = new PrintWriter(sw);
+					e.printStackTrace(pw);
 
-		}
+					logger.severe(sw.toString());
+				}
+			}
 	}
 
 }

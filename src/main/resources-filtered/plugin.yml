@@ -1,0 +1,11 @@
+main: ovh.excale.mc.AdvancedCrafting
+name: ${project.name}
+version: ${project.version}
+description: ${project.description}
+api-version: 1.13
+load: POSTWORLD
+prefix: AdvCraft
+author:
+  - excale
+  - dev_excale@hotmail.com
+website: mc.excale.ovh
