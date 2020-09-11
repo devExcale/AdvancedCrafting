@@ -1,0 +1,29 @@
+# AdvancedCrafting example file
+# BUKKIT NAMES CAN BE SEEN AT:
+#   enchantments:   https://docs.oc.tc/reference/enchantments
+#   items:          https://docs.oc.tc/reference/inventory
+
+AdvancedCrafting:
+  Type: shapeless           # Crafting type, can be Shaped or Shapeless
+  Id: LEAP_POTION           # Crafting Id, can be anything that doesn't collide with any other id
+
+  Recipe:
+    Ingredients:            # Ingredients, as Minecraft Id
+      - Potion
+      - Feather
+      - Rabbit_foot
+
+  Result:
+    Item: Potion                    # Item Id, as Minecraft Id
+    Name: Leap Potion
+    Count: 1                        #                               [Optional, default 1]
+    Unbreakable: no                 # Can be true/false, yes/no     [Optional, default false]
+    Effects:
+      - Key: JUMP
+        Duration: 60
+        Level: 3
+      - Key: DAMAGE_RESISTANCE
+        Duration: 60                #                               [Optional, default 60]
+        Level: 5                    #                               [Optional, default 1]
+    Lore:                           # Result Item lore              [Optional]
+      - Jump at your heart's content!

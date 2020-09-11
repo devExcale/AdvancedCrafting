@@ -1,6 +1,7 @@
 package ovh.excale.mc.advcraft;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -11,6 +12,9 @@ import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.Nullable;
 import ovh.excale.mc.AdvancedCrafting;
 import ovh.excale.mc.advcraft.exceptions.ArgumentParseException;
@@ -119,6 +123,27 @@ public class CraftingRecipe {
 				meta.setDisplayName(conf.getString("AdvancedCrafting.Result.Name"));
 				meta.setUnbreakable(conf.getBoolean("AdvancedCrafting.Result.Unbreakable"));
 				meta.setLore(conf.getStringList("AdvancedCrafting.Result.Lore"));
+
+				if(meta instanceof PotionMeta) {
+					PotionMeta potionMeta = (PotionMeta) meta;
+					potionMeta.setColor(Color.GREEN);
+
+					for(Map<?, ?> map : conf.getMapList("AdvancedCrafting.Result.Effects")) {
+						String effectName = (String) map.get("Key");
+						if(effectName == null)
+							continue;
+
+						PotionEffectType potionEffectType = PotionEffectType.getByName(effectName);
+						if(potionEffectType == null)
+							continue;
+
+						Integer duration = (Integer) map.get("Duration"), level = (Integer) map.get("Level");
+						duration = (duration == null || duration <= 0) ? 1200 : duration * 20;
+						level = (level == null || level <= 0) ? 0 : level - 1;
+
+						potionMeta.addCustomEffect(new PotionEffect(potionEffectType, duration, level), true);
+					}
+				}
 
 				for(Map<?, ?> map : conf.getMapList("AdvancedCrafting.Result.Enchant")) {
 					String enchantName = (String) map.get("Key");
