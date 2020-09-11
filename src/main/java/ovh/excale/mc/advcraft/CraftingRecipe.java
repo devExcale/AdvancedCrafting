@@ -30,7 +30,6 @@ public class CraftingRecipe {
 
 	private final Type type;
 	private final NamespacedKey key;
-	private final HashMap<Enchantment, Integer> enchantments;
 	private final HashMap<String, Material> materials;
 	private String[] shape;
 	private ItemStack result;
@@ -171,7 +170,6 @@ public class CraftingRecipe {
 	public CraftingRecipe(Type type, NamespacedKey key) {
 		this.type = type;
 		this.key = key;
-		enchantments = new HashMap<>();
 		materials = new HashMap<>();
 
 		shape = null;
@@ -207,6 +205,7 @@ public class CraftingRecipe {
 		return key.getKey();
 	}
 
+	@SuppressWarnings("unused")
 	public enum Type {
 		SHAPED,
 		SHAPELESS

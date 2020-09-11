@@ -15,6 +15,7 @@ public class AdvancedCrafting extends JavaPlugin {
 
 	private static Plugin plugin;
 	private static File craftDir;
+	private static boolean debug;
 
 	public static Plugin plugin() {
 		return plugin;
@@ -26,6 +27,11 @@ public class AdvancedCrafting extends JavaPlugin {
 		Logger logger = getLogger();
 		plugin = this;
 
+		File configFile = new File(getDataFolder(), "config.yml");
+		if(!configFile.exists())
+			saveDefaultConfig();
+
+		debug = getConfig().getBoolean("debug");
 		craftDir = new File(getDataFolder(), "crafts");
 
 		if(!craftDir.exists() && !craftDir.mkdirs() || !craftDir.isDirectory()) {
