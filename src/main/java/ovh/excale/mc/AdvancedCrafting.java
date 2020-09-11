@@ -55,8 +55,7 @@ public class AdvancedCrafting extends JavaPlugin {
 			} catch(ArgumentParseException | MissingArgumentException e) {
 				logger.warning(e.getMessage());
 
-				if(true) {
-
+				if(debug) {
 					StringWriter sw = new StringWriter();
 					PrintWriter pw = new PrintWriter(sw);
 					e.printStackTrace(pw);
