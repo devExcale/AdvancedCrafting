@@ -9,13 +9,14 @@ import ovh.excale.mc.advcraft.exceptions.MissingArgumentException;
 import java.io.*;
 import java.util.logging.Logger;
 
+// TODO: ADD LIMIT API
 public class AdvancedCrafting extends JavaPlugin {
 
 	private static Plugin plugin;
 	private static File craftDir;
 	private static boolean debug;
 
-	private static String[] EXAMPLES = new String[] {
+	private static final String[] EXAMPLES = new String[] {
 			"/examples/Shaped.yml", "/examples/Potion Shapeless.yml"
 	};
 
@@ -49,7 +50,7 @@ public class AdvancedCrafting extends JavaPlugin {
 
 					int length;
 					byte[] buffer = new byte[1024];
-					while ((length = is.read(buffer)) > 0) {
+					while((length = is.read(buffer)) > 0) {
 						os.write(buffer, 0, length);
 					}
 
@@ -65,7 +66,8 @@ public class AdvancedCrafting extends JavaPlugin {
 			return;
 		}
 
-		File[] crafts = craftDir.listFiles(pathname -> !pathname.isDirectory() && pathname.getName().endsWith(".yml"));
+		File[] crafts = craftDir.listFiles(pathname -> !pathname.isDirectory() && pathname.getName()
+				.endsWith(".yml"));
 
 		for(File file : crafts)
 			try {
