@@ -59,7 +59,13 @@ public class CraftingRecipe {
 					throw new ArgumentParseException(file, "Type", typeString, e);
 				}
 
-				recipe = new CraftingRecipe(type, new NamespacedKey(AdvancedCrafting.plugin(), key));
+				NamespacedKey namespacedKey = new NamespacedKey(AdvancedCrafting.plugin(), key);
+				recipe = new CraftingRecipe(type, namespacedKey);
+
+				if(conf.contains("AdvancedCrafting.Limit")) {
+					int limit = conf.getInt("AdvancedCrafting.Limit");
+					Limiter.limit(namespacedKey, limit);
+				}
 
 				if(type.equals(Type.SHAPED)) {
 

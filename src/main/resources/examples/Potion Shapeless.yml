@@ -6,6 +6,7 @@
 AdvancedCrafting:
   Type: shapeless           # Crafting type, can be Shaped or Shapeless
   Id: LEAP_POTION           # Crafting Id, can be anything that doesn't collide with any other id
+  Limit: 2
 
   Recipe:
     Ingredients:            # Ingredients, as Minecraft Id

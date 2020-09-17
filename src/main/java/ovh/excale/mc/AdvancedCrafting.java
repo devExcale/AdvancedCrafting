@@ -3,6 +3,7 @@ package ovh.excale.mc;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import ovh.excale.mc.advcraft.CraftingRecipe;
+import ovh.excale.mc.advcraft.Limiter;
 import ovh.excale.mc.advcraft.exceptions.ArgumentParseException;
 import ovh.excale.mc.advcraft.exceptions.MissingArgumentException;
 
@@ -29,6 +30,8 @@ public class AdvancedCrafting extends JavaPlugin {
 		super.onEnable();
 		Logger logger = getLogger();
 		plugin = this;
+
+		Limiter.Listener.start();
 
 		File configFile = new File(getDataFolder(), "config.yml");
 		if(!configFile.exists()) {
@@ -66,8 +69,7 @@ public class AdvancedCrafting extends JavaPlugin {
 			return;
 		}
 
-		File[] crafts = craftDir.listFiles(pathname -> !pathname.isDirectory() && pathname.getName()
-				.endsWith(".yml"));
+		File[] crafts = craftDir.listFiles(pathname -> !pathname.isDirectory() && pathname.getName().endsWith(".yml"));
 
 		for(File file : crafts)
 			try {
